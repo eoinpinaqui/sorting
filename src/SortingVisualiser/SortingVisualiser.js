@@ -13,7 +13,7 @@ export default class SortingVisualiser extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            array: [],
+            bars: [],
         };
     }
 
@@ -22,8 +22,8 @@ export default class SortingVisualiser extends React.Component {
     }
 
     resetArray() {
-        const array = [];
 
+        const array = [];
         // Determine amount of bars to create
         const width = window.innerWidth;
         const container_width = width - 100;
@@ -36,69 +36,58 @@ export default class SortingVisualiser extends React.Component {
         for (let i = 0; i < numBars; i++) {
             array.push(randomIntFromInterval(5, maxBarHeight));
         }
-        this.setState({array},);
+        this.setState({
+            bars: array
+        });
     }
 
     mergeSort() {
-        const animations = getMergeSortAnimations(this.state.array);
-        for (let i = 0; i < animations.length; i++) {
-            const arrayBars = document.getElementsByClassName('array-bar');
-            const colorChange = i % 3 !== 2;
-            if (colorChange) {
-                const [bar1, bar2] = animations[i];
-                const bar1style = arrayBars[bar1].style;
-                const bar2style = arrayBars[bar2].style;
-                const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
-                setTimeout(() => {
-                    bar1style.backgroundColor = color;
-                    bar2style.backgroundColor = color;
-                }, i * ANIMATION_SPEED_MS);
-            } else {
-                setTimeout(() => {
-                    const [bar1, newHeight] = animations[i];
-                    const bar1style = arrayBars[bar1].style;
-                    bar1style.height = `${newHeight}px`;
-                }, i * ANIMATION_SPEED_MS);
-            }
-        }
+        const animations = getMergeSortAnimations(this.state.bars);
+        this.animate(animations);
     }
 
     quickSort() {
-
+        const animations = getQuickSortAnimations(this.state.bars);
+        this.animate(animations);
     }
 
     heapSort() {
     }
 
     bubbleSort() {
-        const animations = getBubbleSortAnimations(this.state.array);
-        for (let i = 0; i < animations.length; i++) {
-            const arrayBars = document.getElementsByClassName('array-bar');
-            const colorChange = (i % 4 === 0 || i % 4 === 1);
-            if (colorChange) {
-                const [bar1, bar2] = animations[i];
-                const bar1style = arrayBars[bar1].style;
-                const bar2style = arrayBars[bar2].style;
-                const color = i % 4 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
-                setTimeout(() => {
-                    bar1style.backgroundColor = color;
-                    bar2style.backgroundColor = color;
-                }, i * ANIMATION_SPEED_MS);
+        const animations = getBubbleSortAnimations(this.state.bars);
+        this.animate(animations);
+    }
 
+    animate(animations) {
+        let k = 0
+        for(let i = 0; i < animations.length; i++) {
+            const arrayBars = document.getElementsByClassName("array-bar");
+            const colorChange = !animations[i][1];
+            if(colorChange) {
+                const bars = animations[i][0];
+                setTimeout(() => {
+                    for(let j = 0; j < bars.length; j++) {
+                        arrayBars[bars[j]].style.backgroundColor = SECONDARY_COLOR;
+                    }
+                }, k++ * ANIMATION_SPEED_MS);
+                setTimeout(() => {
+                    for(let j = 0; j < bars.length; j++) {
+                        arrayBars[bars[j]].style.backgroundColor = PRIMARY_COLOR;
+                    }
+                }, k++ * ANIMATION_SPEED_MS);
             } else {
                 setTimeout(() => {
-                    const [bar1, newHeight] = animations[i];
-                    if(bar1 !== -1) {
-                        const bar1style = arrayBars[bar1].style;
-                        bar1style.height = `${newHeight}px`;
-                    }
-                }, i * ANIMATION_SPEED_MS);
+                    const [bar1, newHeight] = animations[i][0];
+                    const bar1style = arrayBars[bar1].style;
+                    bar1style.height = `${newHeight}px`;
+                }, k++ * ANIMATION_SPEED_MS);
             }
         }
     }
 
     render() {
-        const {array} = this.state
+        const array = this.state.bars
 
         return (
             <div className="array-container">

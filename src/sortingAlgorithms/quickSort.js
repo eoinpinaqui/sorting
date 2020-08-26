@@ -13,20 +13,29 @@ function quickSortHelper(array, start, end, animations) {
 }
 
 function partition(array, start, end, animations) {
-    const pivot = array[end];
-    let i = (start - 1);
-    for(let j = start; j <= end - 1; j++) {
-
-        if(array[j] <= pivot) {
-            i++;
-            let temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
+    let i = start;
+    let j = end + 1;
+    const pivot = array[start];
+    while(true) {
+        while(array[++i] <= pivot ) {
+            if(i === end) break;
+            animations.push([[i], false]);
         }
+        while(array[--j] >= pivot) {
+            if(j === start) break;
+            animations.push([[j], false]);
+        }
+        if(j <= i) break;
+        animations.push([[i, array[j]], true]);
+        animations.push([[j, array[i]], true]);
+        const temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
-
-    let temp = array[i + 1];
-    array[i + 1] = array[end];
-    array[end] = temp;
-    return i + 1;
+    animations.push([[start, array[j]], true]);
+    animations.push([[j, array[start]], true]);
+    const temp = array[start];
+    array[start] = array[j];
+    array[j] = temp;
+    return j;
 }
