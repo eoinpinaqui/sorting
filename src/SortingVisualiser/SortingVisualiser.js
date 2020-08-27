@@ -8,6 +8,7 @@ import {getQuickSortAnimations} from "../sortingAlgorithms/quickSort";
 const ANIMATION_SPEED_MS = 1;
 const PRIMARY_COLOR = '#ff59ac';
 const SECONDARY_COLOR = 'blue';
+const SORTED_COLOR = "green";
 
 export default class SortingVisualiser extends React.Component {
     constructor(props) {
@@ -17,8 +18,15 @@ export default class SortingVisualiser extends React.Component {
         };
     }
 
+    // Reset the array on component mount and on window resize
     componentDidMount() {
         this.resetArray();
+        window.addEventListener("resize", this.resetArray.bind(this));
+    }
+
+    // Remove the event listener when component unmounts
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.resetArray.bind(this));
     }
 
     resetArray() {
@@ -60,9 +68,9 @@ export default class SortingVisualiser extends React.Component {
     }
 
     animate(animations) {
+        const arrayBars = document.getElementsByClassName("array-bar");
         let k = 0
         for(let i = 0; i < animations.length; i++) {
-            const arrayBars = document.getElementsByClassName("array-bar");
             const colorChange = !animations[i][1];
             if(colorChange) {
                 const bars = animations[i][0];
