@@ -4,6 +4,7 @@ import {getMergeSortAnimations} from "../sortingAlgorithms/mergeSort";
 import {getBubbleSortAnimations} from "../sortingAlgorithms/bubbleSort";
 import {getQuickSortAnimations} from "../sortingAlgorithms/quickSort";
 import {getInsertionSortAnimations} from "../sortingAlgorithms/insertionSort";
+import {getSelectionSortAnimations} from "../sortingAlgorithms/selectionSort";
 
 // Constants used
 const ANIMATION_SPEED_MS = 1;
@@ -49,18 +50,23 @@ export default class SortingVisualiser extends React.Component {
         });
     }
 
-    mergeSort() {
-        const animations = getMergeSortAnimations(this.state.bars);
-        this.animate(animations);
-    }
-
     quickSort() {
         const animations = getQuickSortAnimations(this.state.bars);
         this.animate(animations);
     }
 
+    mergeSort() {
+        const animations = getMergeSortAnimations(this.state.bars);
+        this.animate(animations);
+    }
+
     insertionSort() {
         const animations = getInsertionSortAnimations(this.state.bars);
+        this.animate(animations);
+    }
+
+    selectionSort() {
+        const animations = getSelectionSortAnimations(this.state.bars);
         this.animate(animations);
     }
 
@@ -109,9 +115,10 @@ export default class SortingVisualiser extends React.Component {
                 ))}
                 <div className="menu" style={{display: "block"}}>
                     <button className="button" onClick={() => this.resetArray()}>Generate New Array</button>
-                    <button className="button" onClick={() => this.mergeSort()}>Merge Sort</button>
                     <button className="button" onClick={() => this.quickSort()}>Quick Sort</button>
+                    <button className="button" onClick={() => this.mergeSort()}>Merge Sort</button>
                     <button className="button" onClick={() => this.insertionSort()}>Insertion Sort</button>
+                    <button className="button" onClick={() => this.selectionSort()}>Selection Sort</button>
                     <button className="button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
                 </div>
             </div>
