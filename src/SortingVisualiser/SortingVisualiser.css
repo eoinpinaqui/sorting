@@ -23,10 +23,10 @@
 
 .button {
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: calc(10px + 0.5vmin);
+    font-size: calc(10px + 0.25vmin);
     font-weight: 100;
     border: none;
-    margin: 10px 20px;
+    margin: 10px 7px;
     padding: 10px;
     border-radius: 10px;
 }

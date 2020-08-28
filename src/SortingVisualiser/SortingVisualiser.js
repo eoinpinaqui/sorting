@@ -40,7 +40,7 @@ export default class SortingVisualiser extends React.Component {
 
         // Determine how tall to make the bars
         const height = window.innerHeight;
-        const maxBarHeight = (height - 350);
+        const maxBarHeight = Math.max((height - 350), 100);
 
         for (let i = 0; i < numBars; i++) {
             array.push(randomIntFromInterval(5, maxBarHeight));
@@ -119,6 +119,7 @@ export default class SortingVisualiser extends React.Component {
                         key={idx}
                         style={{height: `${value}px`}}/>
                 ))}
+                <p>Choose your algorithm:</p>
                 <div className="menu" style={{display: "block"}}>
                     <button className="button arrayButton" onClick={() => this.resetArray()}>New Array</button>
                     <button className="button sortButton" onClick={() => this.quickSort()}>Quick Sort</button>
