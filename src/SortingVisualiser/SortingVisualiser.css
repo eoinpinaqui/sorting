@@ -23,14 +23,22 @@
 
 .button {
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: calc(10px + 1vmin);
+    font-size: calc(10px + 0.5vmin);
     font-weight: 100;
-    background-color: #303030;
-    color: white;
     border: none;
     margin: 10px 20px;
     padding: 10px;
     border-radius: 10px;
+}
+
+.arrayButton {
+    background-color: #ff59ac;
+    color: #303030;
+}
+
+.sortButton {
+    background-color: #303030;
+    color: white;
 }
 
 .button:hover {

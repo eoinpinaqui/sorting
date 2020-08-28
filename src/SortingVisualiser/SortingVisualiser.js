@@ -120,13 +120,13 @@ export default class SortingVisualiser extends React.Component {
                         style={{height: `${value}px`}}/>
                 ))}
                 <div className="menu" style={{display: "block"}}>
-                    <button className="button" onClick={() => this.resetArray()}>Generate New Array</button>
-                    <button className="button" onClick={() => this.quickSort()}>Quick Sort</button>
-                    <button className="button" onClick={() => this.mergeSort()}>Merge Sort</button>
-                    <button className="button" onClick={() => this.timSort()}>Tim Sort</button>
-                    <button className="button" onClick={() => this.insertionSort()}>Insertion Sort</button>
-                    <button className="button" onClick={() => this.selectionSort()}>Selection Sort</button>
-                    <button className="button" onClick={() => this.bubbleSort()}>Bubble Sort</button>
+                    <button className="button arrayButton" onClick={() => this.resetArray()}>Generate New Array</button>
+                    <button className="button sortButton" onClick={() => this.quickSort()}>Quick Sort</button>
+                    <button className="button sortButton" onClick={() => this.mergeSort()}>Merge Sort</button>
+                    <button className="button sortButton" onClick={() => this.timSort()}>Tim Sort</button>
+                    <button className="button sortButton" onClick={() => this.insertionSort()}>Insertion Sort</button>
+                    <button className="button sortButton" onClick={() => this.selectionSort()}>Selection Sort</button>
+                    <button className="button sortButton" onClick={() => this.bubbleSort()}>Bubble Sort</button>
                 </div>
             </div>
         );
