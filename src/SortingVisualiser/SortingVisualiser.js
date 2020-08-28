@@ -17,6 +17,7 @@ export default class SortingVisualiser extends React.Component {
         super(props);
         this.state = {
             bars: [],
+            sorting: false,
         };
     }
 
@@ -31,7 +32,10 @@ export default class SortingVisualiser extends React.Component {
         window.removeEventListener("resize", this.resetArray.bind(this));
     }
 
+
+
     resetArray() {
+        if(this.state.sorting) return;
         const array = [];
         // Determine amount of bars to create
         const width = window.innerWidth;
@@ -51,31 +55,55 @@ export default class SortingVisualiser extends React.Component {
     }
 
     quickSort() {
+        if(this.state.sorting) return;
+        this.setState((state) => {
+           return{sorting: true};
+        });
         const animations = getQuickSortAnimations(this.state.bars);
         this.animate(animations);
     }
 
     mergeSort() {
+        if(this.state.sorting) return;
+        this.setState((state) => {
+            return{sorting: true};
+        });
         const animations = getMergeSortAnimations(this.state.bars);
         this.animate(animations);
     }
 
     timSort() {
-        const animations = getTimSortAnimations(this.state.bars, 32);
+        if(this.state.sorting) return;
+        this.setState((state) => {
+            return{sorting: true};
+        });
+        const animations = getTimSortAnimations(this.state.bars, 40);
         this.animate(animations);
     }
 
     insertionSort() {
+        if(this.state.sorting) return;
+        this.setState((state) => {
+            return{sorting: true};
+        });
         const animations = getInsertionSortAnimations(this.state.bars);
         this.animate(animations);
     }
 
     selectionSort() {
+        if(this.state.sorting) return;
+        this.setState((state) => {
+            return{sorting: true};
+        });
         const animations = getSelectionSortAnimations(this.state.bars);
         this.animate(animations);
     }
 
     bubbleSort() {
+        if(this.state.sorting) return;
+        this.setState((state) => {
+            return{sorting: true};
+        });
         const animations = getBubbleSortAnimations(this.state.bars);
         this.animate(animations);
     }
@@ -103,6 +131,14 @@ export default class SortingVisualiser extends React.Component {
                     const bar1style = arrayBars[bar1].style;
                     bar1style.height = `${newHeight}px`;
 
+                }, k++ * ANIMATION_SPEED_MS);
+            }
+
+            if(i === animations.length - 1) {
+                setTimeout(() => {
+                    this.setState((state) => {
+                        return{sorting: false};
+                    })
                 }, k++ * ANIMATION_SPEED_MS);
             }
         }
