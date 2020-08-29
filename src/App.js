@@ -1,5 +1,4 @@
 import React from 'react';
-import Sort from './SortingVisualiser/SortingVisualiser'
 import './App.css';
 import SortingVisualiser from "./SortingVisualiser/SortingVisualiser";
 

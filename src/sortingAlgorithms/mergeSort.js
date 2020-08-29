@@ -1,42 +1,55 @@
 export function getMergeSortAnimations(array) {
-    const animations = [];
     if (array.length <= 1) return array;
-    const copy = array.slice();
-    mergeSortHelper(array, 0, array.length - 1, copy, animations);
+    let copy = array.slice();
+    let animations = mergeSort(copy);
     return animations;
 }
 
-function mergeSortHelper(array, start, end, copy, animations) {
-    if (start >= end) return;
-    const middle = Math.floor((start + end) / 2);
-    mergeSortHelper(copy, start, middle, array, animations);
-    mergeSortHelper(copy, middle + 1, end, array, animations);
-    doMerge(array, start, middle, end, copy, animations);
-}
-
-function doMerge(array, start, middle, end, copy, animations) {
-    let k = start;
-    let i = start;
-    let j = middle + 1;
-    while (i <= middle && j <= end) {
-        animations.push([[i, j], false]);
-
-        if (copy[i] <= copy[j]) {
-            animations.push([[k, copy[i]], true]);
-            array[k++] = copy[i++];
-        } else {
-            animations.push([[k, copy[j]], true]);
-            array[k++] = copy[j++];
+function mergeSort(array) {
+    const animations = [];
+    for(let m = 1; m < array.length; m = 2 * m) {
+        for(let i = 0; i < array.length; i += 2 * m) {
+            let start = i;
+            let middle = i + m;
+            let end = Math.min(i + 2*m, array.length);
+            merge(array, start, middle, end, animations);
         }
     }
-    while (i <= middle) {
-        animations.push([[i, i], false]);
-        animations.push([[k, copy[i]], true]);
-        array[k++] = copy[i++];
+    return animations;
+}
+
+function merge(array, start, middle, end, animations) {
+    console.log("Start: " + start + " Middle: " + middle + " End: " + end);
+    let left = array.slice(start, middle);
+    let right = array.slice(middle, end);
+
+    let i = 0;
+    let j = 0;
+    let k = start;
+    while(i < left.length && j < right.length) {
+        animations.push([[start + i, middle + j], false]);
+        if(left[i] <= right[j]) {
+            animations.push([[k, left[i]], true]);
+            array[k] = left[i];
+            i += 1;
+        } else {
+            animations.push([[k, right[j]], true]);
+            array[k] = right[j];
+            j += 1;
+        }
+        k++;
     }
-    while (j <= end) {
-        animations.push([[j, j], false]);
-        animations.push([[k, copy[j]], true]);
-        array[k++] = copy[j++];
+    while(i < left.length) {
+        animations.push([[k, left[i]], true]);
+        array[k] = left[i];
+        i += 1;
+        k += 1;
+    }
+    while(j < right.length) {
+        animations.push([[k, right[j]], true]);
+        array[k] = right[j];
+        j += 1;
+        k += 1;
     }
 }
+

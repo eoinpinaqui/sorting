@@ -49,9 +49,9 @@ export default class SortingVisualiser extends React.Component {
         for (let i = 0; i < numBars; i++) {
             array.push(randomIntFromInterval(5, maxBarHeight));
         }
-        this.setState({
-            bars: array
-        });
+        this.setState((state) => {
+            return{bars: array};
+        })
     }
 
     quickSort() {
@@ -115,6 +115,7 @@ export default class SortingVisualiser extends React.Component {
             const colorChange = !animations[i][1];
             if(colorChange) {
                 const bars = animations[i][0];
+                console.log(bars);
                 setTimeout(() => {
                     for(let j = 0; j < bars.length; j++) {
                         arrayBars[bars[j]].style.backgroundColor = SECONDARY_COLOR;
@@ -137,7 +138,10 @@ export default class SortingVisualiser extends React.Component {
             if(i === animations.length - 1) {
                 setTimeout(() => {
                     this.setState((state) => {
-                        return{sorting: false};
+                        return{
+                            bars: this.state.bars.sort(function(a, b) {return a - b}),
+                            sorting: false
+                        };
                     })
                 }, k++ * ANIMATION_SPEED_MS);
             }

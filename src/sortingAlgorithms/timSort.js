@@ -1,7 +1,8 @@
 export function getTimSortAnimations(array, chunkSize) {
     const animations = [];
     if (array.length <= 1) return array;
-    timSortHelper(array, chunkSize, animations);
+    let copy = array.slice();
+    timSortHelper(copy, chunkSize, animations);
     return animations;
 }
 
@@ -9,8 +10,6 @@ function timSortHelper(array, chunkSize, animations) {
     for(let i = 0; i < array.length; i += chunkSize) {
         insertionSort(array, i, Math.min((i + chunkSize - 1), (array.length - 1)), animations);
     }
-
-    console.log(array);
 
     let sorted = false;
     while(!sorted) {
@@ -38,6 +37,7 @@ function timSortHelper(array, chunkSize, animations) {
 
 function insertionSort(array, start, end, animations) {
     for(let i = start + 1; i <= end; i++) {
+        animations.push([[i], false]);
         let k = array[i];
         let j = i - 1;
         while(j >= start && array[j] > k) {

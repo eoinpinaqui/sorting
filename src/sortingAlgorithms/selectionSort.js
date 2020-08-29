@@ -1,7 +1,8 @@
 export function getSelectionSortAnimations(array) {
     const animations = [];
     if (array.length <= 1) return array;
-    selectionSortHelper(array, animations)
+    let copy = array.slice();
+    selectionSortHelper(copy, animations);
     return animations;
 }
 
