@@ -77,7 +77,7 @@ export default class SortingVisualiser extends React.Component {
         this.setState((state) => {
             return{sorting: true};
         });
-        const animations = getTimSortAnimations(this.state.bars, 40);
+        const animations = getTimSortAnimations(this.state.bars, 25);
         this.animate(animations);
     }
 

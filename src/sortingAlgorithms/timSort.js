@@ -72,12 +72,14 @@ function merge(array, start, middle, end, animations) {
         k++;
     }
     while(i < left.length) {
+        animations.push([[start + 1], false]);
         animations.push([[k, left[i]], true]);
         array[k] = left[i];
         i += 1;
         k += 1;
     }
     while(j < right.length) {
+        animations.push([[middle + j], false]);
         animations.push([[k, right[j]], true]);
         array[k] = right[j];
         j += 1;
